@@ -1,0 +1,512 @@
+/* =========================================
+   Swoosh — LIGHT THEME (6-shot rally, unified arc, faster loop)
+   - Same arc angle/height before & after bounce
+   - Slight speed-up (~9.2s total loop)
+   - Shorter bounce dwells for snappier feel
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Monda:wght@400;700&display=swap');
+
+
+:root {
+  /* Palette */
+  --bg: #f6fbf5;
+  --surface: #ffffff;
+  --text: #1b1c24;
+  --text-muted: #2b4763;
+  --brand-1: #e23e47;
+  --brand-2: #80b0b9;
+  --primary: #2b4763;
+  --link: #2b4763;
+  --card: #ffffff;
+  --ring: rgba(34, 71, 99, 0.16);
+  --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+
+  /* Ball */
+  --ball: #ccff00;
+  --ball-border: #6c7f00;
+  --ball-glow: rgba(204, 255, 0, 0.35);
+
+  /* Flight tuning */
+  --loop: 9.2s; /* slightly faster than 10s */
+  --arc: 30px; /* unified arc height (same pre/post bounce) */
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  line-height: 1.6;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  color: var(--link);
+}
+a:hover {
+  text-decoration: none;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--surface);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: var(--shadow);
+}
+.brand {
+  font-family: 'Monda', sans-serif;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text);
+}
+.logo {
+  width: 42px;
+  height: auto;
+}
+.brand-text {
+  font-size: x-large;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.site-menu {
+  display: flex;
+  gap: 1rem;
+}
+.site-menu a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.6rem;
+}
+.site-menu a:hover {
+  color: var(--text);
+  background: rgba(34, 71, 99, 0.06);
+}
+.menu-toggle {
+  display: none;
+  font-size: 1.25rem;
+  background: none;
+  border: 1px solid rgba(17, 24, 39, 0.2);
+  color: var(--text);
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.5rem;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(246, 251, 245, 0.9),
+      rgba(246, 251, 245, 0.65)
+    ),
+    url("../img/hero.svg");
+  background-size: cover;
+  background-position: center;
+}
+.hero-fallback {
+  display: none;
+}
+.hero .hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 1rem 1.2rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.7s ease both;
+}
+.hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0.25rem 0;
+  color: var(--text);
+}
+.subtitle {
+  color: var(--text-muted);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+.cta {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  background: linear-gradient(45deg, var(--brand-1), var(--brand-2));
+  border-radius: 0.8rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+.about-cta{
+  align-items: center;
+  justify-content: center;
+}
+.cta-img {
+  width: 26px;
+  height: auto;
+}
+
+/* === 6-shot rally with unified arcs & shorter dwell ===
+   Hit points (% relative to .hero):
+   P1 (12%,72%), P2 (84%,40%), P3 (86%,72%),
+   P4 (18%,42%), P5 (70%,56%), P6 (30%,56%)
+*/
+.ball-anim {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--ball);
+  border: 3px solid var(--ball-border);
+  box-shadow: 0 0 0 6px var(--ball-glow);
+  animation: rallyPos var(--loop) linear infinite,
+    flightArc var(--loop) ease-in-out infinite;
+}
+
+/* POSITION — shorter bounce dwells (1% at each hit) */
+@keyframes rallyPos {
+  0% {
+    left: 15%;
+    top: 72%;
+  } /* hit 1*/
+  12% {
+    left: 63%;
+    top: 38%;
+  } /* bounce 1 */
+  22% {
+    left: 90%;
+    top: 30%;
+  } /* hit 2 */
+  34% {
+    left: 25%;
+    top: 28%;
+  } /* bounce 2 */
+  40% {
+    left: 8%;
+    top: 26%;
+  } /* hit 1*/
+  56% {
+    left: 75%;
+    top: 62%;
+  } /* bounce 1 */
+  62% {
+    left: 89%;
+    top: 70%;
+  } /* hit 2 */
+  78% {
+    left: 25%;
+    top: 30%;
+  } /* bounce 2 */
+  81% {
+    left: 20%;
+    top: 25%;
+  }
+  90% {
+    left: 79%;
+    top: 30%;
+  }
+  100% {
+    left: 15%;
+    top: 72%;
+  }
+}
+
+/* ARC — same arc before & after bounce, peaks mid-leg */
+@keyframes flightArc {
+  0% {
+    transform: translateY(0);
+  }
+  /* P1 -> P2 */
+  6% {
+    transform: translateY(calc(-1 * var(--arc)));
+  }
+  12% {
+    transform: translateY(0);
+  }
+  17% {
+    transform: translateY(calc(-1 * var(--arc)));
+  }
+  22% {
+    transform: translateY(0);
+  }
+  28% {
+    transform: translateY(calc(-1 * (var(--arc)+10)));
+  }
+  34% {
+    transform: translateY(0);
+  }
+}
+
+.video-section,
+.pricing,
+.container {
+  padding: 2rem 1rem;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+.video-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+  aspect-ratio: 16/9;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+}
+.video-wrap iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.ext-links a {
+  color: var(--primary);
+}
+.table-wrap {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: var(--card);
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+}
+th,
+td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+  color: var(--text);
+}
+thead th {
+  text-align: left;
+  background: rgba(43, 71, 99, 0.05);
+  color: var(--text);
+}
+
+.feature-list {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1rem;
+}
+.feature-list li {
+  background: rgba(128, 176, 185, 0.1);
+  border: 1px solid rgba(34, 71, 99, 0.12);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.7rem 1rem;
+  border-radius: 0.7rem;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(45deg, var(--brand-1), var(--brand-2));
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+.card {
+  background: var(--card);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Each link */
+.gallery-grid a {
+  position: relative;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  aspect-ratio: 16 / 9; /* ensures consistent display for wide images */
+}
+
+.video-badge {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.85rem;
+  background: rgba(27, 28, 36, 0.8);
+  color: white;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.4rem;
+}
+
+form label {
+  display: block;
+  margin-top: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(34, 71, 99, 0.2);
+  background: #fff;
+  color: var(--text);
+}
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+fieldset {
+  border: 1px solid rgba(34, 71, 99, 0.2);
+  border-radius: 0.8rem;
+  margin-top: 1rem;
+  padding: 0.6rem 0.8rem;
+}
+legend {
+  padding: 0 0.4rem;
+  color: var(--text-muted);
+}
+form button {
+  margin-top: 1rem;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Mobile drawer menu (≤ 820px): right-side panel + backdrop */
+@media (max-width: 820px){
+  :root{ --header-h: 64px; }
+
+  .menu-toggle{ display:block; }
+  /* Make header a higher stacking context than the backdrop */
+  .site-header{
+    z-index: 1800;      /* was ~1000; ensure it's above backdrop */
+  }
+  /* Right drawer panel */
+  .site-menu{
+    position: fixed;
+    z-index: 1501;                 /* above backdrop */
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(65vw, 360px);       /* comfy, not full screen */
+    background: var(--surface);
+    box-shadow: -18px 0 36px rgba(0,0,0,.18);
+    border-left: 1px solid rgba(17,24,39,.10);
+
+    /* vertical list, large tap targets */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: .25rem;
+    padding: calc(var(--header-h) + 1rem) 1.25rem 1.25rem;
+
+    /* closed state */
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .35s ease, opacity .25s ease;
+  }
+  .site-menu.open{
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .site-menu a{
+    width: 100%;
+    padding: .9rem 0;
+    font-size: 1.06rem;
+    color: var(--text);
+    border-radius: .4rem;
+    text-decoration: none;
+  }
+  .site-menu a:active{
+    background: rgba(34,71,99,.08);
+  }
+
+  /* Backdrop behind the drawer */
+  .menu-backdrop{
+    position: fixed;
+    inset: 0;
+    z-index: 1500;                 /* just under the drawer */
+    background: rgba(0,0,0,.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .menu-backdrop.show{
+    opacity: 1;
+    pointer-events: auto;          /* allows click-to-close */
+  }
+
+  /* Lock scroll when drawer is open */
+  body.no-scroll{ overflow: hidden; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .ball-anim {
+    animation: none;
+  }
+}

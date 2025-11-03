@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Videos • Swoosh</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page { max-width: 1100px; margin: 6vh auto; padding: 0 16px; }
+    .page h1 { font-size: 2rem; margin-bottom: 8px; }
+    .muted { opacity: .8; }
+    .toolbar { display: flex; gap: 12px; align-items: center; justify-content: space-between; margin: 16px 0 24px; }
+    .video-card { border: 1px solid #eaeaea; border-radius: 16px; padding: 12px; overflow: hidden; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+    .video-title { font-weight: 600; margin-bottom: 8px; }
+    #gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .hidden { display: none !important; }
+    .btn { display: inline-block; padding: 10px 16px; border-radius: 10px; border: 1px solid #ddd; cursor: pointer; background: #fff; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="toolbar">
+      <div>
+        <h1>My Videos</h1>
+        <div class="muted">Videos stored in your Firebase folder</div>
+      </div>
+      <div>
+        <a href="index.html" class="btn">Home</a>
+        <button id="auth-btn" class="btn">Sign in</button>
+      </div>
+    </header>
+
+    <section id="empty-state" class="hidden muted">No videos yet. Upload to <code>videos/&lt;your-uid&gt;/</code> and refresh.</section>
+    <section id="error-state" class="hidden muted"></section>
+
+    <section id="gallery-grid"></section>
+  </div>
+
+  <script type="module">
+    import { initAuthUI } from './js/auth.js';
+    initAuthUI();
+  </script>
+  <script type="module" src="./js/gallery.js"></script>
+</body>
+</html>

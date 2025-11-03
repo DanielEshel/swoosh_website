@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swoosh – Tennis Tracking System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+
+</head>
+<body>
+
+  <!-- Responsive site-wide navigation menu -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-text">SWOOSH</span>
+    </a>
+
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+      ☰
+    </button>
+
+    <nav id="site-menu" class="site-menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+
+  <main class="container" aria-labelledby="contact-title">
+    <h1 id="contact-title">Contact Us</h1>
+    <p>Questions, quotes, or partnerships? Drop us a line.</p>
+
+    <!-- Contact form meeting all specified input requirements -->
+    <form id="contact-form" class="card" action="#" method="post" novalidate>
+      <!-- a. Short text input -->
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" placeholder="e.g., Serena Williams" required>
+
+      <!-- b. Long text input (textarea) -->
+      <label for="message">Your message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Tell us what you need..." required></textarea>
+
+      <!-- c. Radio buttons (choose one) -->
+      <fieldset>
+        <legend>I'm interested in</legend>
+        <label><input type="radio" name="interest" value="starter" required> Starter</label>
+        <label><input type="radio" name="interest" value="pro"> Pro</label>
+        <label><input type="radio" name="interest" value="coach"> Coach</label>
+      </fieldset>
+
+      <!-- d. Multiple choice (checkboxes) -->
+      <fieldset>
+        <legend>Extras</legend>
+        <label><input type="checkbox" name="extras" value="extended_warranty"> Extended warranty</label>
+        <label><input type="checkbox" name="extras" value="coach_portal"> Coach portal access</label>
+        <label><input type="checkbox" name="extras" value="multi_mounts"> Extra mounts</label>
+      </fieldset>
+
+      <!-- e. Select dropdown -->
+      <label for="budget">Budget range</label>
+      <select id="budget" name="budget" required>
+        <option value="" disabled selected>Select one</option>
+        <option value="under-100">Under $100</option>
+        <option value="100-200">$100–$200</option>
+        <option value="200-300">$200–$300</option>
+        <option value="300-plus">$300+</option>
+      </select>
+
+      <!-- Submit button -->
+      <button type="submit" class="button">Send</button>
+    </form>
+
+    <section class="contact-details">
+      <h2>Other ways to reach us</h2>
+      <p>Email: <a href="mailto:hello@swoosh.example">hello@swoosh.example</a></p>
+      <p>Follow us:
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a> ·
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Swoosh • Let's talk</p>
+  </footer>
+</body>
+</html>

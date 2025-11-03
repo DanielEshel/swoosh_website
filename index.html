@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swoosh – Tennis Tracking System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+
+</head>
+<body>
+
+  <!-- Responsive site-wide navigation menu -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-text">SWOOSH</span>
+    </a>
+
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+      ☰
+    </button>
+
+    <nav id="site-menu" class="site-menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+
+  <!-- Hero section with a representative image -->
+  <section class="hero" role="banner" aria-label="Swoosh hero">
+    <!-- Background image for the hero via CSS, but include an inline image for fallback -->
+    <img src="img/hero.svg" alt="Tennis court and motion art" class="hero-fallback">
+    <div class="hero-content">
+      <h1>Track. Predict. Win.</h1>
+      <p class="subtitle">Swoosh is a smart tennis phone‑mount that tracks the ball and keeps it in frame.</p>
+      <!-- Image as a link (requirement: images as links) -->
+      <a class="cta" href="gallery.html">
+        <img src="img/ball.svg" alt="Tennis ball icon" class="cta-img"> View the system in action
+      </a>
+    </div>
+
+    <!-- Simple animation: moving tennis ball -->
+    <div class="ball-anim" aria-hidden="truje"></div>
+  </section>
+
+  <!-- Short video embed  -->
+  <section class="video-section" aria-labelledby="vid-title">
+    <h2 id="vid-title">See Swoosh in 60 seconds</h2>
+    <!-- Using a YouTube embed as the short video -->
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube.com/watch?v=ckbX699wngs"
+        title="Swoosh overview video"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+    <!-- External links -->
+    <p class="ext-links">
+      Learn more about <a href="https://www.itftennis.com/" target="_blank" rel="noopener">tennis standards (ITF)</a> or visit our
+      <a href="https://github.com/DanielEshel/SWOOSH" target="_blank" rel="noopener">open‑source repository</a>.
+    </p>
+  </section>
+
+  <!-- Table - simple pricing/features comparison -->
+  <section class="pricing" aria-labelledby="pricing-title">
+    <h2 id="pricing-title">Choose your Swoosh</h2>
+    <div class="table-wrap" role="region" aria-label="Pricing table">
+      <table>
+        <caption class="sr-only">Swoosh plans comparison</caption>
+        <thead>
+          <tr>
+            <th scope="col">Plan</th>
+            <th scope="col">What you get</th>
+            <th scope="col">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Starter</th>
+            <td>Phone mount + basic tracking app</td>
+            <td>$99</td>
+          </tr>
+          <tr>
+            <th scope="row">Pro</th>
+            <td>Everything in Starter + AI trajectory hints</td>
+            <td>$199</td>
+          </tr>
+          <tr>
+            <th scope="row">Coach</th>
+            <td>Pro + multi‑session analytics dashboard</td>
+            <td>$299</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Swoosh • Built with ♥ for tennis lovers</p>
+  </footer>
+<script type="module">import { initAuthUI } from './js/auth.js'; initAuthUI();</script>
+</body>
+</html>

@@ -1,33 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login • Swoosh</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .login-card { max-width: 420px; margin: 10vh auto; padding: 24px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); background: #fff; }
-    .login-card h1 { margin: 0 0 12px; font-size: 1.6rem; }
-    .login-card p { opacity: .8; }
-    .btn { display: inline-block; padding: 10px 16px; border-radius: 10px; border: 1px solid #ddd; cursor: pointer; }
-  </style>
-</head>
-<body>
-  <main class="login-card">
-    <h1>Welcome to Swoosh</h1>
-    <p>Please sign in to continue.</p>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login • Swoosh</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .login-card {
+        max-width: 420px;
+        margin: 10vh auto;
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        background: #fff;
+      }
+      .login-card h1 {
+        margin: 0 0 12px;
+        font-size: 1.6rem;
+      }
+      .login-card p {
+        opacity: 0.8;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="login-card">
+      <h1>Welcome to Swoosh</h1>
+      <p>Please sign in to continue.</p>
 
-    <nav style="margin: 16px 0;">
-      <a href="index.html" class="btn">Back to Home</a>
-      <a href="gallery.html" class="btn">Go to Gallery</a>
-    </nav>
+      <nav style="margin: 16px 0">
+        <a href="index.html" class="btn">Back to Home</a>
+        <a href="gallery.html" class="btn">Go to Gallery</a>
+      </nav>
 
-    <button id="auth-btn" class="btn">Sign in</button>
-  </main>
+      <button id="auth-btn" class="btn">Sign in</button>
+    </main>
 
-  <script type="module">
-    import { initAuthUI } from './js/auth.js';
-    initAuthUI();
-  </script>
-</body>
+    <script type="module">
+      import { initAuthUI, attachAuthModal } from "./js/auth.js";
+      initAuthUI();
+      attachAuthModal();
+    </script>
+  </body>
 </html>

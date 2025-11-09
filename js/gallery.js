@@ -1,5 +1,5 @@
 // js/gallery.js
-import { storage } from './firebase-init.js';
+import { storage } from './firebase-config.js';
 import { requireAuth } from './auth.js';
 import { ref, listAll, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js';
 
@@ -16,6 +16,8 @@ function renderVideoCard(container, url, name) {
   vid.controls = true;
   vid.preload = 'metadata';
   vid.playsInline = true;
+  vid.autoplay = false;
+  vid.muted = false;
 
   card.appendChild(title);
   card.appendChild(vid);

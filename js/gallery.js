@@ -16,38 +16,41 @@ function renderVideoCard(container, url, name) {
   vid.controls = true;
   vid.preload = 'metadata';
   vid.playsInline = true;
-  vid.autoplay = false;
-  vid.muted = false;
 
+  card.appendChild(vid); // Video first
   card.appendChild(title);
-  card.appendChild(vid);
   container.appendChild(card);
 }
 
 async function loadGallery() {
-  const user = await requireAuth();
+  const user = await requireAuth(); // Wait for user login
   const grid = document.getElementById('gallery-grid');
   const empty = document.getElementById('empty-state');
   const errBox = document.getElementById('error-state');
 
+  // Clear previous content
+  grid.innerHTML = ''; 
+
   try {
-    const root = ref(storage, `videos/${user.uid}`);
-    const listing = await listAll(root);
+    // Look for videos in a folder named after the user's UID
+    const folderRef = ref(storage, `videos/${user.uid}`);
+    const listing = await listAll(folderRef);
 
     if (listing.items.length === 0) {
       if (empty) empty.classList.remove('hidden');
       return;
     }
 
+    // Load each video
     for (const itemRef of listing.items) {
       const url = await getDownloadURL(itemRef);
       renderVideoCard(grid, url, itemRef.name);
     }
   } catch (e) {
-    console.error(e);
+    console.error("Gallery Error:", e);
     if (errBox) {
       errBox.classList.remove('hidden');
-      errBox.textContent = 'Failed to load your videos.';
+      errBox.textContent = 'Could not load videos. Make sure you have uploaded files to your folder.';
     }
   }
 }

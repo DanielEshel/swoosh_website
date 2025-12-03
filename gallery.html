@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="css/style.css" />
     <script defer src="js/main.js"></script>
   </head>
+
   <body>
-    <!-- Responsive site-wide navigation menu -->
     <header class="site-header">
       <a class="brand" href="index.html">
         <span class="brand-text">SWOOSH</span>
@@ -29,40 +29,72 @@
         <a href="gallery.html">Gallery</a>
         <a href="contact.html">Contact</a>
       </nav>
+
+      <div class="auth-actions">
+        <span id="user-email" class="hidden"></span>
+        <button id="btn-login" class="btn-nav btn-ghost">Log in</button>
+        <button id="btn-signup" class="btn-nav btn-primary">Sign up</button>
+        <button id="btn-logout" class="btn-nav btn-ghost hidden">
+          Log out
+        </button>
+      </div>
     </header>
 
-    <main class="container" aria-labelledby="gallery-title">
-      <h1 id="gallery-title">Gallery</h1>
-      <p>Peek into Swoosh prototypes, courtside tests, and app screens.</p>
+    <main class="container">
+      <h1>My Court Sessions</h1>
+      <p>Your tracked sessions are stored securely in the cloud.</p>
 
-      <!-- Simple responsive gallery; images are also links to themselves (images as links) -->
-      <div class="gallery-grid">
-        <a href="img/hero.svg" target="_blank" rel="noopener">
-          <img src="img/stock1.jpg" alt="Court hero artwork" />
-        </a>
-        <a href="img/hero.svg" target="_blank" rel="noopener">
-          <img src="img/stock2.jpg" alt="Court hero artwork" />
-        </a>
-        <a href="img/hero.svg" target="_blank" rel="noopener">
-          <img src="img/stock3.jpg" alt="Court hero artwork" />
-        </a>
-        <a href="img/hero.svg" target="_blank" rel="noopener">
-          <img src="img/stock5.jpg" alt="Court hero artwork" />
-        </a>
-        <a href="img/hero.svg" target="_blank" rel="noopener">
-          <img src="img/stock6.jpg" alt="Court hero artwork" />
-        </a>
+      <div id="gallery-grid" class="gallery-grid"></div>
+
+      <div
+        id="empty-state"
+        class="hidden"
+        style="text-align: center; margin-top: 50px"
+      >
+        <h3>No videos found</h3>
+        <p>Videos uploaded to your account folder will appear here.</p>
       </div>
+
+      <div
+        id="error-state"
+        class="hidden"
+        style="color: #e23e47; text-align: center; margin-top: 20px"
+      ></div>
     </main>
 
     <footer class="site-footer">
       <p>© <span id="year"></span> Swoosh • See you on the court</p>
     </footer>
+
+    <div id="auth-modal" class="hidden auth-backdrop">
+      <div class="auth-dialog">
+        <button id="auth-modal-close" class="auth-close" aria-label="Close">
+          ×
+        </button>
+        <h2 id="auth-modal-title">Welcome</h2>
+        <p class="auth-subtitle">Sign in or create an account.</p>
+        <form id="auth-form" class="auth-form">
+          <input id="auth-email" type="email" placeholder="Email" required />
+          <input
+            id="auth-password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <button id="auth-submit" type="submit">Sign in</button>
+        </form>
+        <div class="auth-divider">or</div>
+        <button id="auth-google" class="auth-google">
+          Continue with Google
+        </button>
+        <div id="auth-error" class="auth-error"></div>
+      </div>
+    </div>
+
     <script type="module">
       import { initAuthUI, attachAuthModal } from "./js/auth.js";
       initAuthUI();
       attachAuthModal();
     </script>
   </body>
-
 </html>

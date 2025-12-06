@@ -1,7 +1,7 @@
 // js/gallery.js
 import { db } from './firebase-config.js'; // This now works because config is fixed
 import { requireAuth } from './auth.js';
-import { collection, query, where, getDocs, orderBy } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js';
+import { ref, get } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js';
 
 function renderVideoCard(container, data) {
   const card = document.createElement('div');
@@ -31,42 +31,34 @@ function renderVideoCard(container, data) {
 async function loadGallery() {
   const user = await requireAuth();
   const grid = document.getElementById('gallery-grid');
-  const empty = document.getElementById('empty-state');
-  const errorState = document.getElementById('error-state');
-  
-  // Clear loading state/previous content
-  if (grid) grid.innerHTML = '';
-  if (errorState) errorState.classList.add('hidden');
+  // ... (keep UI clearing code) ...
 
   try {
-    
-    // Query: Give me items from "videos" where userId == current user
-    const q = query(
-      collection(db, "videos"), 
-      where("userId", "==", user.uid)
-      // Note: If you uncomment orderBy, you must create an index in Firebase Console
-      // orderBy("createdAt", "desc") 
-    );
+    // ⚡️ THE BIG CHANGE: 
+    // Instead of searching the whole list, we point DIRECTLY to the user's folder
+    const userVideosRef = ref(db, `videos/${user.uid}`);
 
-    const querySnapshot = await getDocs(q);
-    if (querySnapshot.empty) {
+    const snapshot = await get(userVideosRef);
+
+    if (!snapshot.exists()) {
       if (empty) empty.classList.remove('hidden');
       return;
     }
 
-    // Hide empty state if we have videos
-    if (empty) empty.classList.add('hidden');
+    // Convert Object to Array
+    const videosObj = snapshot.val();
+    const videosList = Object.values(videosObj); 
 
-    querySnapshot.forEach((doc) => {
-      renderVideoCard(grid, doc.data());
+    // Sort by date (newest first)
+    videosList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+    videosList.forEach(videoData => {
+      renderVideoCard(grid, videoData);
     });
 
   } catch (e) {
-    console.error("Error loading gallery:", e);
-    if (errorState) {
-      errorState.textContent = "Could not load stats. Check console for details.";
-      errorState.classList.remove('hidden');
-    }
+    console.error("Gallery Error:", e);
+    // ... error handling ...
   }
 }
 

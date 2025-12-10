@@ -3,39 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Swoosh – Tennis Tracking System</title>
+  <title>About • Swoosh</title>
   <link rel="stylesheet" href="css/style.css">
   <script defer src="js/main.js"></script>
-
 </head>
 <body>
 
   <header class="site-header">
-      <a class="brand" href="index.html">
-        <span class="brand-text">SWOOSH</span>
-      </a>
+    <a class="brand" href="index.html">
+      <span class="brand-text">SWOOSH</span>
+    </a>
 
-      <button
-        class="menu-toggle"
-        aria-expanded="false"
-        aria-controls="site-menu"
-        aria-label="Open menu"
-      >
-        ☰
-      </button>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
 
-      <nav id="site-menu" class="site-menu" aria-label="Main">
-        <a href="index.html">Home</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+    <nav id="site-menu" class="site-menu">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-      </header>
-
-
-  <main class="container" aria-labelledby="about-title">
-    <h1 id="about-title">About Swoosh</h1>
+  <main class="container">
+    <h1>About Swoosh</h1>
     <p>
       Swoosh is a compact tennis tracking system that keeps your phone's camera locked on the ball,
       using an ESP32‑powered servo mount and an on‑device lightweight AI model.
@@ -54,12 +44,11 @@
       Record cleaner footage, reduce setup time, and capture every rally. No bulky tripods or complex gear—just your phone and Swoosh.
     </p>
 
-    <div class="about-cta">
+    <div class="about-cta" style="margin-top: 2rem;">
       <a class="button" href="contact.html">Get a quote</a>
-      <br>
-       <br>
-      <a class="img-link" href="gallery.html" title="Open gallery">
-        <img src="img/ball.svg" alt="Go to gallery">
+      <br><br>
+      <a class="cta" href="gallery.html" style="display:inline-flex; align-items:center; gap:8px;">
+        <img src="img/ball.svg" alt="" style="width:20px;"> Go to Gallery
       </a>
     </div>
   </main>

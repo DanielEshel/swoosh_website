@@ -3,39 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Swoosh – Tennis Tracking System</title>
+  <title>Contact • Swoosh</title>
   <link rel="stylesheet" href="css/style.css">
   <script defer src="js/main.js"></script>
-
 </head>
 <body>
 
   <header class="site-header">
-      <a class="brand" href="index.html">
-        <span class="brand-text">SWOOSH</span>
-      </a>
+    <a class="brand" href="index.html">
+      <span class="brand-text">SWOOSH</span>
+    </a>
 
-      <button
-        class="menu-toggle"
-        aria-expanded="false"
-        aria-controls="site-menu"
-        aria-label="Open menu"
-      >
-        ☰
-      </button>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
 
-      <nav id="site-menu" class="site-menu" aria-label="Main">
-        <a href="index.html">Home</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+    <nav id="site-menu" class="site-menu">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-      </header>
-
-
-  <main class="container" aria-labelledby="contact-title">
-    <h1 id="contact-title">Contact Us</h1>
+  <main class="container">
+    <h1>Contact Us</h1>
     <p>Questions, quotes, or partnerships? Drop us a line.</p>
 
     <form id="contact-form" class="card" action="#" method="post" novalidate>
@@ -52,37 +42,25 @@
         <label><input type="radio" name="interest" value="coach"> Coach</label>
       </fieldset>
 
-      <fieldset>
-        <legend>Extras</legend>
-        <label><input type="checkbox" name="extras" value="extended_warranty"> Extended warranty</label>
-        <label><input type="checkbox" name="extras" value="coach_portal"> Coach portal access</label>
-        <label><input type="checkbox" name="extras" value="multi_mounts"> Extra mounts</label>
-      </fieldset>
-
       <label for="budget">Budget range</label>
       <select id="budget" name="budget" required>
         <option value="" disabled selected>Select one</option>
         <option value="under-100">Under $100</option>
         <option value="100-200">$100–$200</option>
-        <option value="200-300">$200–$300</option>
         <option value="300-plus">$300+</option>
       </select>
 
       <button type="submit" class="button">Send</button>
     </form>
 
-    <section class="contact-details">
+    <section class="site-footer" style="text-align: left; padding: 0;">
       <h2>Other ways to reach us</h2>
       <p>Email: <a href="mailto:hello@swoosh.example">hello@swoosh.example</a></p>
-      <p>Follow us:
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a> ·
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
-      </p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> Swoosh • Let's talk</p>
+    <p>© <span id="year"></span> Swoosh • All rights reserved</p>
   </footer>
 </body>
 </html>

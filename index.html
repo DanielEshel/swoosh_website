@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -9,39 +8,31 @@
     <script defer="" src="js/main.js"></script>
   </head>
   <body>
-    <!-- Responsive site-wide navigation menu -->
     <header class="site-header">
       <a class="brand" href="index.html">
         <span class="brand-text">SWOOSH</span>
       </a>
 
-      <button
-        class="menu-toggle"
-        aria-expanded="false"
-        aria-controls="site-menu"
-        aria-label="Open menu"
-      >
-        ☰
-      </button>
+      <button class="menu-toggle" aria-label="Open menu">☰</button>
 
-      <nav id="site-menu" class="site-menu" aria-label="Main">
+      <nav id="site-menu" class="site-menu">
         <a href="index.html">Home</a>
-        <a href="gallery.html">Gallery</a> <a href="about.html">About</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
-      </nav>
 
-      <div class="auth-actions">
-        <span id="user-email" class="hidden"></span>
-        <button id="btn-login" class="btn-nav btn-ghost">Log in</button>
-        <button id="btn-signup" class="btn-nav btn-primary">Sign up</button>
-        <button id="btn-logout" class="btn-nav btn-ghost hidden">
-          Log out
-        </button>
-      </div>
+        <div class="auth-actions">
+          <span id="user-email" class="hidden"></span>
+          <button id="btn-login" class="btn-nav btn-ghost">Log in</button>
+          <button id="btn-signup" class="btn-nav btn-primary">Sign up</button>
+          <button id="btn-logout" class="btn-nav btn-ghost hidden">
+            Log out
+          </button>
+        </div>
+      </nav>
     </header>
-    <!-- Hero section with a representative image -->
+
     <section aria-label="Swoosh hero" class="hero" role="banner">
-      <!-- Background image for the hero via CSS, but include an inline image for fallback -->
       <img
         alt="Tennis court and motion art"
         class="hero-fallback"
@@ -53,45 +44,14 @@
           Swoosh is a smart tennis phone‑mount that tracks the ball and keeps it
           in frame.
         </p>
-        <!-- Image as a link (requirement: images as links) -->
         <a class="cta" href="gallery.html">
           <img alt="Tennis ball icon" class="cta-img" src="img/ball.svg" /> View
           the system in action
         </a>
       </div>
-      <!-- Simple animation: moving tennis ball -->
-      <div aria-hidden="truje" class="ball-anim"></div>
+      <div aria-hidden="true" class="ball-anim"></div>
     </section>
-    <!-- Short video embed  -->
-    <section aria-labelledby="vid-title" class="video-section">
-      <h2 id="vid-title">See Swoosh in 60 seconds</h2>
-      <!-- Using a YouTube embed as the short video -->
-      <div class="video-wrap">
-        <iframe
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="strict-origin-when-cross-origin"
-          src="https://www.youtube.com/watch?v=ckbX699wngs"
-          title="Swoosh overview video"
-        ></iframe>
-      </div>
-      <!-- External links -->
-      <p class="ext-links">
-        Learn more about
-        <a href="https://www.itftennis.com/" rel="noopener" target="_blank"
-          >tennis standards (ITF)</a
-        >
-        or visit our
-        <a
-          href="https://github.com/DanielEshel/SWOOSH"
-          rel="noopener"
-          target="_blank"
-          >open‑source repository</a
-        >.
-      </p>
-    </section>
-    <!-- Table - simple pricing/features comparison -->
+
     <section aria-labelledby="pricing-title" class="pricing">
       <h2 id="pricing-title">Choose your Swoosh</h2>
       <div aria-label="Pricing table" class="table-wrap" role="region">
@@ -126,108 +86,10 @@
         </table>
       </div>
     </section>
+
     <footer class="site-footer">
       <p>© <span id="year"></span> Swoosh • Built with ♥ for tennis lovers</p>
     </footer>
-    <script type="module">
-      import { initAuthUI } from "./js/auth.js";
-      initAuthUI();
-    </script>
-
-    <div
-      class="hidden"
-      id="auth-modal"
-      style="
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 10000;
-      "
-    >
-      <div
-        style="
-          background: #fff;
-          width: min(480px, 92%);
-          border-radius: 16px;
-          padding: 20px;
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-          position: relative;
-        "
-      >
-        <button
-          aria-label="Close"
-          id="auth-modal-close"
-          style="
-            position: absolute;
-            right: 12px;
-            top: 12px;
-            border: none;
-            background: transparent;
-            font-size: 20px;
-            cursor: pointer;
-          "
-        >
-          ×
-        </button>
-        <h2 id="auth-modal-title" style="margin-top: 0">Welcome</h2>
-        <p style="opacity: 0.8; margin-top: 0">Sign in or create an account.</p>
-        <form id="auth-form" style="display: grid; gap: 10px; margin-top: 10px">
-          <input
-            id="auth-email"
-            placeholder="Email"
-            required=""
-            style="padding: 10px; border: 1px solid #ddd; border-radius: 10px"
-            type="email"
-          />
-          <input
-            id="auth-password"
-            placeholder="Password"
-            required=""
-            style="padding: 10px; border: 1px solid #ddd; border-radius: 10px"
-            type="password"
-          />
-          <button
-            class="btn"
-            id="auth-submit"
-            style="
-              padding: 10px 16px;
-              border: 1px solid #ddd;
-              border-radius: 10px;
-              background: #fff;
-              cursor: pointer;
-            "
-            type="submit"
-          >
-            Continue
-          </button>
-        </form>
-        <div style="margin: 12px 0; text-align: center; opacity: 0.7">or</div>
-        <button
-          class="btn"
-          id="auth-google"
-          style="
-            width: 100%;
-            padding: 10px 16px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background: #fff;
-            cursor: pointer;
-          "
-        >
-          Continue with Google
-        </button>
-        <div id="auth-error" style="color: #b00020; margin-top: 10px"></div>
-      </div>
-    </div>
-
-    <script type="module">
-      import { initAuthUI, attachAuthModal } from "./js/auth.js";
-      initAuthUI();
-      attachAuthModal();
-    </script>
 
     <div id="auth-modal" class="hidden auth-backdrop">
       <div class="auth-dialog">

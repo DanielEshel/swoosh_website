@@ -2,14 +2,12 @@
 import { db, storage } from './firebase-config.js';
 import { requireAuth } from './auth.js';
 
-// Import Realtime Database functions
 import { 
   ref as dbRef, 
   remove, 
   onValue 
 } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js';
 
-// Import Storage functions
 import { 
   ref as storageRef, 
   deleteObject 
@@ -22,21 +20,16 @@ async function deleteVideo(videoId, videoUrl, cardElement) {
   const user = await requireAuth();
 
   try {
-    // A. Delete the file from Storage
     const videoFileRef = storageRef(storage, videoUrl);
     await deleteObject(videoFileRef);
 
-    // B. Delete the entry from Database
     const videoDbRef = dbRef(db, `videos/${user.uid}/${videoId}`);
     await remove(videoDbRef);
 
     console.log("Video deleted successfully");
-    // Note: We don't need to manually remove the card because 
-    // onValue in loadGallery will automatically refresh the screen.
 
   } catch (error) {
     console.error("Error deleting video:", error);
-    // If the file is already gone but DB entry exists, we force delete the DB entry
     if (error.code === 'storage/object-not-found') {
        const videoDbRef = dbRef(db, `videos/${user.uid}/${videoId}`);
        await remove(videoDbRef);
@@ -52,11 +45,11 @@ function renderVideoCard(container, data) {
   const card = document.createElement('div');
   card.className = 'video-card';
 
-  const dateStr = data.createdAt && data.createdAt.seconds 
-    ? new Date(data.createdAt.seconds * 1000).toLocaleDateString() 
+  // FIX: Matches Flutter 'timestamp' (milliseconds) instead of 'createdAt'
+  const dateStr = data.timestamp 
+    ? new Date(data.timestamp).toLocaleDateString() + ' ' + new Date(data.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     : 'Just now';
 
-  // HTML structure
   card.innerHTML = `
     <div style="position: relative;">
       
@@ -83,7 +76,6 @@ function renderVideoCard(container, data) {
     </div>
   `;
 
-  // Attach Delete Event
   const deleteBtn = card.querySelector('.delete-btn');
   deleteBtn.addEventListener('click', () => {
     deleteVideo(data.id, data.videoUrl, card);
@@ -99,31 +91,24 @@ async function loadGallery() {
   
   const userVideosRef = dbRef(db, `videos/${user.uid}`);
 
-  // This listener runs immediately AND whenever data changes
   onValue(userVideosRef, (snapshot) => {
-    
-    // Clear the current list
     grid.innerHTML = ''; 
 
     if (!snapshot.exists()) {
-      // Optional: Show an "Empty" message if you have one in your HTML
-      // const empty = document.getElementById('empty-state');
-      // if (empty) empty.classList.remove('hidden');
+      // Optional: Handle empty state
       return;
     }
 
     const videosObj = snapshot.val();
 
-    // Convert Object to Array and add the ID
     const videosList = Object.entries(videosObj).map(([key, value]) => ({
       ...value,
       id: key
     }));
 
-    // Sort by date (newest first)
-    videosList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    // FIX: Sort using 'timestamp' to match Flutter
+    videosList.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-    // Render each video
     videosList.forEach(videoData => {
       renderVideoCard(grid, videoData);
     });
@@ -133,5 +118,4 @@ async function loadGallery() {
   });
 }
 
-// --- 4. Start ---
 document.addEventListener('DOMContentLoaded', loadGallery);

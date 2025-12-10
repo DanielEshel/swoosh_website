@@ -2,5 +2,3 @@ img/
 package-lock.json
 package.json
 node_modules/
-js/firebase-config.js
-js/firebase-config2.js

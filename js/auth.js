@@ -29,10 +29,11 @@ function getEls() {
     submit: document.getElementById("auth-submit"),
     toggleLink: document.getElementById("auth-toggle-link"),
     toggleText: document.getElementById("auth-toggle-text"),
-    
+
     // Elements specifically for the Contact Page autofill
     contactEmail: document.getElementById("email"),
     contactName: document.getElementById("name"),
+    mainCtaBtn: document.getElementById('main-cta-btn')
   };
 }
 
@@ -40,10 +41,10 @@ function openModal(mode = "login") {
   authMode = mode;
   const els = getEls();
   if (!els.modal) return;
-  
+
   els.modal.classList.remove("hidden");
   els.error.textContent = "";
-  
+
   // Update texts based on mode
   if (mode === "signup") {
     els.title.textContent = "Create an Account";
@@ -67,8 +68,10 @@ export function attachAuthModal() {
   const els = getEls();
 
   // open
-  if (els.btnLogin) els.btnLogin.addEventListener("click", () => openModal("login"));
-  if (els.btnSignup) els.btnSignup.addEventListener("click", () => openModal("signup"));
+  if (els.btnLogin)
+    els.btnLogin.addEventListener("click", () => openModal("login"));
+  if (els.btnSignup)
+    els.btnSignup.addEventListener("click", () => openModal("signup"));
 
   // toggle between login and signup inside the modal
   if (els.toggleLink) {
@@ -97,7 +100,7 @@ export function attachAuthModal() {
           const cred = await createUserWithEmailAndPassword(
             auth,
             els.email.value,
-            els.password.value
+            els.password.value,
           );
           // optional display name
           const name = els.email.value.split("@")[0];
@@ -108,7 +111,7 @@ export function attachAuthModal() {
           await signInWithEmailAndPassword(
             auth,
             els.email.value,
-            els.password.value
+            els.password.value,
           );
         }
         closeModal();
@@ -162,14 +165,33 @@ export function initAuthUI() {
     // show gallery link
     if (els.navGallery) els.navGallery.classList.toggle("hidden", !loggedIn);
 
-    // --- AUTO-FILL CONTACT PAGE FIELDS ---
-    // If the user is logged in, automatically populate empty contact fields
+    // --- MAIN CTA BUTTON & CONTACT AUTO-FILL ---
     if (loggedIn) {
+      // 1. Update the Main CTA Button to go to Gallery
+      if (els.mainCtaBtn) {
+        els.mainCtaBtn.textContent = "Go to Gallery";
+        els.mainCtaBtn.href = "gallery.html";
+        els.mainCtaBtn.onclick = null; // Clear the modal popup
+      }
+
+      // 2. Auto-fill Contact fields
       if (els.contactEmail && !els.contactEmail.value) {
         els.contactEmail.value = user.email || "";
       }
       if (els.contactName && !els.contactName.value && user.displayName) {
         els.contactName.value = user.displayName;
+      }
+    } else {
+      // Revert the Main CTA Button to Create Account
+      if (els.mainCtaBtn) {
+        els.mainCtaBtn.textContent = "Create Account";
+        els.mainCtaBtn.href = "#";
+
+        // Re-attach the function that opens the sign-up modal
+        els.mainCtaBtn.onclick = (e) => {
+          e.preventDefault();
+          openModal("signup"); // Fixed function call
+        };
       }
     }
 

@@ -1,66 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact • Swoosh</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/main.js"></script>
-</head>
-<body>
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<title>Swoosh – Contact & Beta Access</title>
+		<link href="css/style.css" rel="stylesheet" />
+		<script defer="" src="js/main.js"></script>
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="brand" href="index.html">
+				<span class="brand-text">SWOOSH</span>
+			</a>
 
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <span class="brand-text">SWOOSH</span>
-    </a>
+			<button class="menu-toggle" aria-label="Open menu">☰</button>
 
-    <button class="menu-toggle" aria-label="Open menu">☰</button>
+			<nav id="site-menu" class="site-menu">
+				<a href="index.html">Home</a>
+				<a href="gallery.html">Gallery</a>
+				<a href="about.html">About</a>
+				<a href="contact.html">Contact</a>
 
-    <nav id="site-menu" class="site-menu">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+				<div class="auth-actions">
+					<span id="user-email" class="hidden"></span>
+					<button id="btn-login" class="btn-nav btn-ghost">Log in</button>
+					<button id="btn-signup" class="btn-nav btn-primary">Sign up</button>
+					<button id="btn-logout" class="btn-nav btn-ghost hidden">
+						Log out
+					</button>
+				</div>
+			</nav>
+		</header>
 
-  <main class="container">
-    <h1>Contact Us</h1>
-    <p>Questions, quotes, or partnerships? Drop us a line.</p>
+		<section class="container" style="max-width: 650px; padding-top: 4rem">
+			<div class="card">
+				<h1 style="margin-top: 0; color: var(--text)">Get in Touch</h1>
+				<p class="subtitle" style="margin-bottom: 2rem">
+					Want to join the beta, request app access, or pre-order the smart
+					mount? Drop us a line below and we'll get back to you.
+				</p>
 
-    <form id="contact-form" class="card" action="#" method="post" novalidate>
-      <label for="name">Your name</label>
-      <input type="text" id="name" name="name" placeholder="e.g., Serena Williams" required>
+				<form action="#" method="POST" id="contact-form">
+					<label for="name">Name</label>
+					<input
+						type="text"
+						id="name"
+						name="name"
+						placeholder="Your name"
+						required
+					/>
 
-      <label for="message">Your message</label>
-      <textarea id="message" name="message" rows="5" placeholder="Tell us what you need..." required></textarea>
+					<label for="email">Email</label>
+					<input
+						type="email"
+						id="email"
+						name="email"
+						placeholder="Your email address"
+						required
+					/>
 
-      <fieldset>
-        <legend>I'm interested in</legend>
-        <label><input type="radio" name="interest" value="starter" required> Starter</label>
-        <label><input type="radio" name="interest" value="pro"> Pro</label>
-        <label><input type="radio" name="interest" value="coach"> Coach</label>
-      </fieldset>
+					<label for="interest">What are you interested in?</label>
+					<select id="interest" name="interest">
+						<option value="beta-app">Beta App Access (iOS / Android)</option>
+						<option value="testing">Hardware Testing Program</option>
+						<option value="preorder">Pre-order the Smart Mount</option>
+						<option value="general">General Inquiry / Other</option>
+					</select>
 
-      <label for="budget">Budget range</label>
-      <select id="budget" name="budget" required>
-        <option value="" disabled selected>Select one</option>
-        <option value="under-100">Under $100</option>
-        <option value="100-200">$100–$200</option>
-        <option value="300-plus">$300+</option>
-      </select>
+					<label for="message">Message (Optional)</label>
+					<textarea
+						id="message"
+						name="message"
+						rows="5"
+						placeholder="Tell us a bit about your game or why you'd like to test Swoosh..."
+					></textarea>
 
-      <button type="submit" class="button">Send</button>
-    </form>
+					<button
+						type="submit"
+						class="cta cta-primary"
+						style="margin-top: 1.5rem; width: 100%"
+					>
+						Send Request
+					</button>
+				</form>
+			</div>
+		</section>
 
-    <section class="site-footer" style="text-align: left; padding: 0;">
-      <h2>Other ways to reach us</h2>
-      <p>Email: <a href="mailto:hello@swoosh.example">hello@swoosh.example</a></p>
-    </section>
-  </main>
+		<footer class="site-footer">
+			<p>© <span id="year"></span> Swoosh • Built with ♥ for tennis lovers</p>
+		</footer>
 
-  <footer class="site-footer">
-    <p>© <span id="year"></span> Swoosh • All rights reserved</p>
-  </footer>
-</body>
+		<div id="auth-modal" class="hidden auth-backdrop">
+			<div class="auth-dialog">
+				<button id="auth-modal-close" class="auth-close" aria-label="Close">
+					&times;
+				</button>
+
+				<div class="auth-header">
+					<h2 id="auth-modal-title">Welcome Back</h2>
+					<p class="auth-subtitle">
+						Sign in to track your matches and view your dashboard.
+					</p>
+				</div>
+
+				<div class="auth-body">
+					<form id="auth-form" class="auth-form">
+						<input
+							id="auth-email"
+							type="email"
+							placeholder="Email address"
+							required
+						/>
+						<input
+							id="auth-password"
+							type="password"
+							placeholder="Password"
+							required
+						/>
+						<button id="auth-submit" type="submit">Sign In</button>
+					</form>
+
+					<div class="auth-divider">
+						<span>or</span>
+					</div>
+
+					<button id="auth-google" class="auth-google">
+						<svg
+							class="google-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 48 48"
+							width="20px"
+							height="20px"
+						>
+							<path
+								fill="#EA4335"
+								d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+							/>
+							<path
+								fill="#4285F4"
+								d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+							/>
+							<path
+								fill="#FBBC05"
+								d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+							/>
+							<path
+								fill="#34A853"
+								d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+							/>
+							<path fill="none" d="M0 0h48v48H0z" />
+						</svg>
+						Continue with Google
+					</button>
+
+					<div id="auth-error" class="auth-error"></div>
+
+					<div class="auth-toggle">
+						<span id="auth-toggle-text">Don't have an account?</span>
+						<a href="#" id="auth-toggle-link">Create account</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="module">
+			import { initAuthUI, attachAuthModal } from "./js/auth.js";
+			initAuthUI();
+			attachAuthModal();
+			document.getElementById("year").textContent = new Date().getFullYear();
+		</script>
+	</body>
 </html>

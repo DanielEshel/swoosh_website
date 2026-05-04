@@ -27,6 +27,12 @@ function getEls() {
     userEmail: document.getElementById("user-email"),
     navGallery: document.getElementById("nav-gallery"),
     submit: document.getElementById("auth-submit"),
+    toggleLink: document.getElementById("auth-toggle-link"),
+    toggleText: document.getElementById("auth-toggle-text"),
+    
+    // Elements specifically for the Contact Page autofill
+    contactEmail: document.getElementById("email"),
+    contactName: document.getElementById("name"),
   };
 }
 
@@ -34,12 +40,22 @@ function openModal(mode = "login") {
   authMode = mode;
   const els = getEls();
   if (!els.modal) return;
+  
   els.modal.classList.remove("hidden");
   els.error.textContent = "";
-  els.title.textContent =
-    mode === "signup" ? "Create your account" : "Welcome back";
-  if (els.submit)
-    els.submit.textContent = mode === "signup" ? "Create account" : "Sign in";
+  
+  // Update texts based on mode
+  if (mode === "signup") {
+    els.title.textContent = "Create an Account";
+    if (els.submit) els.submit.textContent = "Sign Up";
+    if (els.toggleText) els.toggleText.textContent = "Already have an account?";
+    if (els.toggleLink) els.toggleLink.textContent = "Sign in";
+  } else {
+    els.title.textContent = "Welcome Back";
+    if (els.submit) els.submit.textContent = "Sign In";
+    if (els.toggleText) els.toggleText.textContent = "Don't have an account?";
+    if (els.toggleLink) els.toggleLink.textContent = "Create account";
+  }
 }
 
 function closeModal() {
@@ -53,6 +69,14 @@ export function attachAuthModal() {
   // open
   if (els.btnLogin) els.btnLogin.addEventListener("click", () => openModal("login"));
   if (els.btnSignup) els.btnSignup.addEventListener("click", () => openModal("signup"));
+
+  // toggle between login and signup inside the modal
+  if (els.toggleLink) {
+    els.toggleLink.addEventListener("click", (e) => {
+      e.preventDefault(); // prevents page jump
+      openModal(authMode === "login" ? "signup" : "login");
+    });
+  }
 
   // close
   if (els.btnClose) els.btnClose.addEventListener("click", closeModal);
@@ -137,6 +161,17 @@ export function initAuthUI() {
 
     // show gallery link
     if (els.navGallery) els.navGallery.classList.toggle("hidden", !loggedIn);
+
+    // --- AUTO-FILL CONTACT PAGE FIELDS ---
+    // If the user is logged in, automatically populate empty contact fields
+    if (loggedIn) {
+      if (els.contactEmail && !els.contactEmail.value) {
+        els.contactEmail.value = user.email || "";
+      }
+      if (els.contactName && !els.contactName.value && user.displayName) {
+        els.contactName.value = user.displayName;
+      }
+    }
 
     // extra safety: if user just logged in from popup, close modal
     if (loggedIn) {

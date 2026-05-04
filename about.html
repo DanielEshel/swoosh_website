@@ -1,60 +1,189 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About • Swoosh</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script defer src="js/main.js"></script>
-</head>
-<body>
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<title>Swoosh – About the Project</title>
+		<link href="css/style.css" rel="stylesheet" />
+		<script defer="" src="js/main.js"></script>
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="brand" href="index.html">
+				<span class="brand-text">SWOOSH</span>
+			</a>
 
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <span class="brand-text">SWOOSH</span>
-    </a>
+			<button class="menu-toggle" aria-label="Open menu">☰</button>
 
-    <button class="menu-toggle" aria-label="Open menu">☰</button>
+			<nav id="site-menu" class="site-menu">
+				<a href="index.html">Home</a>
+				<a href="gallery.html">Gallery</a>
+				<a href="about.html">About</a>
+				<a href="contact.html">Contact</a>
 
-    <nav id="site-menu" class="site-menu">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+				<div class="auth-actions">
+					<span id="user-email" class="hidden"></span>
+					<button id="btn-login" class="btn-nav btn-ghost">Log in</button>
+					<button id="btn-signup" class="btn-nav btn-primary">Sign up</button>
+					<button id="btn-logout" class="btn-nav btn-ghost hidden">
+						Log out
+					</button>
+				</div>
+			</nav>
+		</header>
 
-  <main class="container">
-    <h1>About Swoosh</h1>
-    <p>
-      Swoosh is a compact tennis tracking system that keeps your phone's camera locked on the ball,
-      using an ESP32‑powered servo mount and an on‑device lightweight AI model.
-      It helps players and coaches focus on technique—not on framing.
-    </p>
+		<section
+			class="container"
+			style="padding-top: 4rem; padding-bottom: 2rem; text-align: center"
+		>
+			<h1
+				style="
+					font-size: clamp(2.5rem, 5vw, 3.5rem);
+					margin-bottom: 1rem;
+					color: var(--text);
+				"
+			>
+				About Swoosh
+			</h1>
+			<p class="subtitle" style="max-width: 700px; margin: 0 auto">
+				Born from a lifelong passion for tennis and a drive to make
+				professional-grade tracking accessible to every player.
+			</p>
+		</section>
 
-    <h2>How it works</h2>
-    <ul class="feature-list">
-      <li>Computer vision detects and tracks ball movement in real time.</li>
-      <li>Servo mount adjusts the phone angle to keep the action centered.</li>
-      <li>Analytics help you measure progress over time.</li>
-    </ul>
+		<section class="about-product container" style="padding-top: 2rem">
+			<div class="grid-2">
+				<div class="card">
+					<h2>The Story Behind Swoosh</h2>
+					<p>
+						Swoosh began as my final engineering project in college. As an avid
+						tennis player, I was constantly frustrated by how difficult it was
+						to record my matches to analyze my technique. Hiring a camera
+						operator wasn't an option, and static tripods were essentially
+						useless for a dynamic sport. That frustration sparked a vision: to
+						build a smart, robotic mount that acts as a personal cameraman.
+					</p>
+				</div>
 
-    <h2>Why Swoosh?</h2>
-    <p>
-      Record cleaner footage, reduce setup time, and capture every rally. No bulky tripods or complex gear—just your phone and Swoosh.
-    </p>
+				<div class="card">
+					<h2>The Problem with Tripods</h2>
+					<p>
+						Today, the most common solution for amateur players is placing a
+						static smartphone tripod at the edge of the court. This approach is
+						flawed: a static camera frequently misses plays at the edges of the
+						court, provides no automatic feedback on boundaries, and leaves
+						players with hours of raw footage that is tedious to watch.
+					</p>
+				</div>
 
-    <div class="about-cta" style="margin-top: 2rem;">
-      <a class="button" href="contact.html">Get a quote</a>
-      <br><br>
-      <a class="cta" href="gallery.html" style="display:inline-flex; align-items:center; gap:8px;">
-        <img src="img/ball.svg" alt="" style="width:20px;"> Go to Gallery
-      </a>
-    </div>
-  </main>
+				<div class="card">
+					<h2>The Swoosh Solution</h2>
+					<p>
+						We realized the need for a smart, portable, and affordable tracking
+						system. Swoosh combines an active IoT hardware mount with an
+						intelligent mobile app. By tracking the ball in real-time and
+						automatically panning the camera, the system ensures the action is
+						always perfectly in frame, upgrading the training experience for
+						anyone.
+					</p>
+				</div>
 
-  <footer class="site-footer">
-    <p>© <span id="year"></span> Swoosh • All rights reserved</p>
-  </footer>
-</body>
+				<div class="card">
+					<h2>Powered by Advanced Tech</h2>
+					<p>
+						Swoosh bridges the physical and digital worlds. The robotic mount
+						uses an ESP32 microcontroller and high-torque servo motors,
+						communicating seamlessly via Bluetooth Low Energy (BLE). On the
+						software side, a Flutter mobile app runs a custom YOLOv8
+						machine-learning model to detect the tennis ball in real-time at
+						30fps, while Firebase securely syncs your videos to the cloud.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<footer class="site-footer">
+			<p>© <span id="year"></span> Swoosh • Built with ♥ for tennis lovers</p>
+		</footer>
+
+		<div id="auth-modal" class="hidden auth-backdrop">
+			<div class="auth-dialog">
+				<button id="auth-modal-close" class="auth-close" aria-label="Close">
+					&times;
+				</button>
+
+				<div class="auth-header">
+					<h2 id="auth-modal-title">Welcome Back</h2>
+					<p class="auth-subtitle">
+						Sign in to track your matches and view your dashboard.
+					</p>
+				</div>
+
+				<div class="auth-body">
+					<form id="auth-form" class="auth-form">
+						<input
+							id="auth-email"
+							type="email"
+							placeholder="Email address"
+							required
+						/>
+						<input
+							id="auth-password"
+							type="password"
+							placeholder="Password"
+							required
+						/>
+						<button id="auth-submit" type="submit">Sign In</button>
+					</form>
+
+					<div class="auth-divider">
+						<span>or</span>
+					</div>
+
+					<button id="auth-google" class="auth-google">
+						<svg
+							class="google-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 48 48"
+							width="20px"
+							height="20px"
+						>
+							<path
+								fill="#EA4335"
+								d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+							/>
+							<path
+								fill="#4285F4"
+								d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+							/>
+							<path
+								fill="#FBBC05"
+								d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+							/>
+							<path
+								fill="#34A853"
+								d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+							/>
+							<path fill="none" d="M0 0h48v48H0z" />
+						</svg>
+						Continue with Google
+					</button>
+
+					<div id="auth-error" class="auth-error"></div>
+
+					<div class="auth-toggle">
+						<span id="auth-toggle-text">Don't have an account?</span>
+						<a href="#" id="auth-toggle-link">Create account</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="module">
+			import { initAuthUI, attachAuthModal } from "./js/auth.js";
+			initAuthUI();
+			attachAuthModal();
+			document.getElementById("year").textContent = new Date().getFullYear();
+		</script>
+	</body>
 </html>

@@ -32,55 +32,77 @@
       </nav>
     </header>
 
-    <section aria-label="Swoosh hero" class="hero" role="banner">
-      <img
-        alt="Tennis court and motion art"
-        class="hero-fallback"
-        src="img/hero.svg"
-      />
+    <section aria-label="Swoosh hero" class="hero container" role="banner">
       <div class="hero-content">
         <h1>Track. Predict. Win.</h1>
         <p class="subtitle">
           Swoosh is a smart tennis phone‑mount that tracks the ball and keeps it
-          in frame.
+          in frame. Never miss a rally again.
         </p>
-        <a class="cta" href="gallery.html">
-          <img alt="Tennis ball icon" class="cta-img" src="img/ball.svg" /> View
-          the system in action
-        </a>
+        <div class="hero-ctas">
+          <button class="cta cta-primary" onclick="document.getElementById('btn-signup').click()">Create Account</button>
+          <a class="cta cta-secondary" href="gallery.html">
+            <img alt="Tennis ball icon" class="cta-img" src="img/ball.svg" /> Go to Gallery
+          </a>
+        </div>
       </div>
-      <div aria-hidden="true" class="ball-anim"></div>
+      <div class="hero-visual">
+        <div class="animation-wrapper">
+          <img
+            alt="Tennis court and motion art"
+            class="court-img"
+            src="img/hero.svg"
+          />
+          <div aria-hidden="true" class="ball-anim"></div>
+        </div>
+      </div>
     </section>
 
-    <section aria-labelledby="pricing-title" class="pricing">
-      <h2 id="pricing-title">Choose your Swoosh</h2>
-      <div aria-label="Pricing table" class="table-wrap" role="region">
+    <section class="about-product container">
+      <div class="grid-2">
+        <div class="card">
+          <h2>The Smart Mount</h2>
+          <p>
+            Our intelligent IoT phone mount connects via Bluetooth Low Energy to physically pan and tilt your smartphone. Built with high-torque, lightning-fast servos and an ESP32 microcontroller, the mount reacts instantly to keep the action perfectly centered while you play.
+          </p>
+        </div>
+        <div class="card">
+          <h2>The Swoosh App</h2>
+          <p>
+            The companion app serves as the brains of the operation. Running an advanced AI ball-tracking model in real-time right on your phone, it predicts the ball's trajectory, commands the mount where to look, and logs your session statistics.
+          </p>
+          <div class="app-links">
+            <a href="contact.html" class="button">Request iOS Access</a>
+            <a href="contact.html" class="button">Request Android Access</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="specs container">
+      <h2>System Specifications</h2>
+      <div class="table-wrap">
         <table>
-          <caption class="sr-only">
-            Swoosh plans comparison
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Plan</th>
-              <th scope="col">What you get</th>
-              <th scope="col">Price</th>
-            </tr>
-          </thead>
           <tbody>
             <tr>
-              <th scope="row">Starter</th>
-              <td>Phone mount + basic tracking app</td>
-              <td>$99</td>
+              <th scope="row">Microcontroller</th>
+              <td>ESP32 with ultra-low latency BLE 5.0</td>
             </tr>
             <tr>
-              <th scope="row">Pro</th>
-              <td>Everything in Starter + AI trajectory hints</td>
-              <td>$199</td>
+              <th scope="row">Actuators</th>
+              <td>Dual-axis high-speed servo motors (Pan: 180°, Tilt: 90°)</td>
             </tr>
             <tr>
-              <th scope="row">Coach</th>
-              <td>Pro + multi‑session analytics dashboard</td>
-              <td>$299</td>
+              <th scope="row">Battery Life</th>
+              <td>10000mAh rechargeable lithium-ion (Up to 12 hours of continuous play)</td>
+            </tr>
+            <tr>
+              <th scope="row">AI Tracking Model</th>
+              <td>Custom trained YOLOv8-nano, optimized for mobile NPU execution</td>
+            </tr>
+            <tr>
+              <th scope="row">App Compatibility</th>
+              <td>iOS 14.0 or later / Android 10.0 or later</td>
             </tr>
           </tbody>
         </table>
@@ -91,35 +113,84 @@
       <p>© <span id="year"></span> Swoosh • Built with ♥ for tennis lovers</p>
     </footer>
 
-    <div id="auth-modal" class="hidden auth-backdrop">
-      <div class="auth-dialog">
-        <button id="auth-modal-close" class="auth-close" aria-label="Close">
-          ×
-        </button>
-        <h2 id="auth-modal-title">Welcome</h2>
-        <p class="auth-subtitle">Sign in or create an account.</p>
-        <form id="auth-form" class="auth-form">
-          <input id="auth-email" type="email" placeholder="Email" required />
-          <input
-            id="auth-password"
-            type="password"
-            placeholder="Password"
-            required
-          />
-          <button id="auth-submit" type="submit">Sign in</button>
-        </form>
-        <div class="auth-divider">or</div>
-        <button id="auth-google" class="auth-google">
-          Continue with Google
-        </button>
-        <div id="auth-error" class="auth-error"></div>
-      </div>
-    </div>
+    	<div id="auth-modal" class="hidden auth-backdrop">
+			<div class="auth-dialog">
+				<button id="auth-modal-close" class="auth-close" aria-label="Close">
+					&times;
+				</button>
+
+				<div class="auth-header">
+					<h2 id="auth-modal-title">Welcome Back</h2>
+					<p class="auth-subtitle">
+						Sign in to track your matches and view your dashboard.
+					</p>
+				</div>
+
+				<div class="auth-body">
+					<form id="auth-form" class="auth-form">
+						<input
+							id="auth-email"
+							type="email"
+							placeholder="Email address"
+							required
+						/>
+						<input
+							id="auth-password"
+							type="password"
+							placeholder="Password"
+							required
+						/>
+						<button id="auth-submit" type="submit">Sign In</button>
+					</form>
+
+					<div class="auth-divider">
+						<span>or</span>
+					</div>
+
+					<button id="auth-google" class="auth-google">
+						<svg
+							class="google-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 48 48"
+							width="20px"
+							height="20px"
+						>
+							<path
+								fill="#EA4335"
+								d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+							/>
+							<path
+								fill="#4285F4"
+								d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+							/>
+							<path
+								fill="#FBBC05"
+								d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+							/>
+							<path
+								fill="#34A853"
+								d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+							/>
+							<path fill="none" d="M0 0h48v48H0z" />
+						</svg>
+						Continue with Google
+					</button>
+
+					<div id="auth-error" class="auth-error"></div>
+
+					<div class="auth-toggle">
+						<span id="auth-toggle-text">Don't have an account?</span>
+						<a href="#" id="auth-toggle-link">Create account</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
     <script type="module">
       import { initAuthUI, attachAuthModal } from "./js/auth.js";
       initAuthUI();
       attachAuthModal();
+      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
   </body>
 </html>

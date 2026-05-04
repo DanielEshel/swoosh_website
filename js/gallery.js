@@ -41,43 +41,51 @@ async function deleteVideo(videoId, videoUrl, cardElement) {
 }
 
 // --- 2. Render Card Function ---
+// --- 2. Render Card Function ---
 function renderVideoCard(container, data) {
   const card = document.createElement('div');
   card.className = 'video-card';
 
-  // FIX: Matches Flutter 'timestamp' (milliseconds) instead of 'createdAt'
   const dateStr = data.timestamp 
     ? new Date(data.timestamp).toLocaleDateString() + ' ' + new Date(data.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
     : 'Just now';
 
+  // We wrap the thumbnail/title in an anchor tag that links to video.html?id=...
   card.innerHTML = `
     <div style="position: relative;">
-      
       <button class="delete-btn" style="
           position: absolute; 
           top: 10px; 
           right: 10px; 
-          background: rgba(255, 0, 0, 0.8); 
+          background: rgba(226, 62, 71, 0.9); 
           color: white; 
           border: none; 
-          border-radius: 4px; 
-          padding: 5px 10px; 
+          border-radius: 6px; 
+          padding: 6px 12px; 
+          font-weight: bold;
           cursor: pointer; 
-          z-index: 10;">
+          z-index: 10;
+          transition: background 0.2s;">
         Delete
       </button>
 
-      <video src="${data.videoUrl}" controls preload="metadata" playsinline style="width:100%; aspect-ratio:16/9; background:#000; display:block; border-radius: 8px 8px 0 0;"></video>
-      <div class="video-badge">Speed: ${data.maxSpeed || 'N/A'} mph</div>
+      <a href="video.html?id=${data.id}&url=${encodeURIComponent(data.videoUrl)}" style="display:block; text-decoration: none; color: inherit;">
+        <video src="${data.videoUrl}" preload="metadata" style="width:100%; aspect-ratio:16/9; background:#000; display:block; border-radius: 12px 12px 0 0; object-fit: cover;" muted></video>
+        <div class="video-badge">Speed: ${data.maxSpeed || 'N/A'} mph</div>
+      </a>
     </div>
-    <div class="video-title" style="padding: 10px;">
-      <div style="font-weight:bold; margin-bottom: 4px;">${data.title || 'Practice Session'}</div>
-      <div style="font-size: 0.8rem; opacity: 0.7;">${dateStr} • ${data.rallyCount || 0} shots</div>
-    </div>
+    
+    <a href="video.html?id=${data.id}&url=${encodeURIComponent(data.videoUrl)}" style="display:block; text-decoration: none; color: inherit;">
+      <div class="video-title" style="padding: 15px;">
+        <div style="font-weight: 700; margin-bottom: 4px; font-size: 1.1rem; color: var(--text);">${data.title || 'Practice Session'}</div>
+        <div style="font-size: 0.85rem; color: var(--text-muted);">${dateStr} • ${data.rallyCount || 0} shots</div>
+      </div>
+    </a>
   `;
 
   const deleteBtn = card.querySelector('.delete-btn');
-  deleteBtn.addEventListener('click', () => {
+  deleteBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent the click from navigating to the video page
     deleteVideo(data.id, data.videoUrl, card);
   });
   

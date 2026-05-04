@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swoosh – View Session</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script defer src="js/main.js"></script>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-text">SWOOSH</span>
+      </a>
+      <button class="menu-toggle" aria-label="Open menu">☰</button>
+      <nav id="site-menu" class="site-menu">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main class="container" style="max-width: 900px; padding-top: 2rem;">
+      <a href="gallery.html" style="display: inline-flex; align-items: center; gap: 5px; margin-bottom: 1rem; font-weight: 600;">
+        ← Back to Gallery
+      </a>
+
+      <div class="card" style="padding: 1.5rem;">
+        <h1 id="video-title" style="margin-top: 0; margin-bottom: 1.5rem;">Loading Session...</h1>
+        
+        <div style="border-radius: 12px; overflow: hidden; background: #000; box-shadow: var(--shadow);">
+          <video id="main-player" controls playsinline style="width: 100%; aspect-ratio: 16/9; display: block;">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a id="download-btn" href="#" download class="cta cta-secondary">
+              Download Video
+            </a>
+            <a href="https://app.clipchamp.com/" target="_blank" rel="noopener noreferrer" class="cta cta-primary">
+              Edit in Clipchamp (Free)
+            </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Swoosh • See you on the court</p>
+    </footer>
+
+    <script type="module">
+      import { requireAuth } from "./js/auth.js";
+      
+      async function initVideoPage() {
+        // Ensure user is logged in
+        await requireAuth();
+
+        // Get the video URL and ID from the page URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = urlParams.get('url');
+        
+        if (videoUrl) {
+          const player = document.getElementById('main-player');
+          player.src = videoUrl;
+          document.getElementById('video-title').textContent = "Practice Session";
+          
+          // Set up the download button
+          const downloadBtn = document.getElementById('download-btn');
+          downloadBtn.href = videoUrl;
+        } else {
+          document.getElementById('video-title').textContent = "Video not found.";
+        }
+      }
+
+      initVideoPage();
+    </script>
+  </body>
+</html>
